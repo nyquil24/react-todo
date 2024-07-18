@@ -2,21 +2,10 @@ import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
+import TodoList from './TodoList'
+import AddTodoForm from './AddToForm'
 
-const todoList = [
-  {
-    id: 123, 
-    title: "Practice", 
-  }, 
-  {
-    id: 234, 
-    title: "Read", 
-  }, 
-  {
-    id: 345, 
-    title: "Project", 
-  }
-]; 
+
 
 
 function App() {
@@ -27,16 +16,8 @@ function App() {
 
     <>  
       <h1>Todo List</h1>
-      <ul>
-      {todoList.map(({ id, title}) => (
-        <li key={id}>
-          <span>{id} </span>
-          <br/> 
-          <span>{title}</span>
-      </li>
-    ))}
-    </ul> 
-  
+      <TodoList/>
+      <AddTodoForm/>
     </>
 )}
 export default App;
