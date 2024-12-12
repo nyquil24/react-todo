@@ -1,6 +1,8 @@
+// eslint-disable-next-line no-unused-vars
 import React from 'react';
 
-const AddTodoForm = ({ onAddTodo }) => {
+// eslint-disable-next-line react/prop-types
+const AddTodoForm = ({ onAddTodo }) => {//onAddTodo prop, passed from App, to add a new todo
   const handleAddTodo = (event) => {
     event.preventDefault();
     const todoTitle = event.target.elements.title.value.trim();
