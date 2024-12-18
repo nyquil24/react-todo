@@ -3,10 +3,10 @@
 import React from 'react';
 import TodoListItem from './TodoListItem';
 
-const TodoList = ({ todos }) => {
+const TodoList = ({ todoList }) => {
   return (
     <ul>
-      {todos.map((todo) => ( // map method iterates over the "todos" array
+      {todoList.map((todo) => ( // map method iterates over the "todos" array
         <TodoListItem key={todo.id} todo={todo} /> //TodoListItem component
       ))}
     </ul>
