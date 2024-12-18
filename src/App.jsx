@@ -1,3 +1,5 @@
+/* eslint-disable no-undef */
+/* eslint-disable no-unused-vars */
 // eslint-disable-next-line no-unused-vars
 import React, { useState } from 'react';
 import TodoList from './TodoList';
@@ -8,7 +10,7 @@ const App = () => {
   const [todos, setTodos] = useState([]);
   //todos: An array to hold the list of todo items. 
   //setTodos function to update the todos array. 
-  const [newTodo, setNewTodo] = useState('');
+  const [todoList, setTodoList] = useState([]); //create todoList state variable
 
   //This function is used to add a new Todo and updates the "newTodo" state
   const handleAddTodo = (todoTitle) => {
@@ -17,12 +19,15 @@ const App = () => {
     setNewTodo(todoTitle);
   };
 
+  const addTodo = (newTodo) => {  //takes a new todo object and add it to the list
+    setTodoList([...todoList, newTodo]); 
+  }
+
   return (
     <div>
       <h1>Todo List</h1>
-      <AddTodoForm onAddTodo={handleAddTodo} /> {/*//renders the AddTodoForm and passes the handleAddTodo function to it as a prop.*/}
-      <p>New Todo: {newTodo}</p> {/*Displays the latest added todo */}
-      <TodoList todos={todos} /> {/*passes the todos array to "TodoList" component */}
+      <AddTodoForm onAddTodo={addTodo} /> {/*//renders the AddTodoForm and passes the handleAddTodo function to it as a prop.*/}
+      <TodoList todoList={todoList} /> {/*passes the todoList array to "TodoList" component */}
     </div>
   );
 };
