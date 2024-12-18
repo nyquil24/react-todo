@@ -1,23 +1,26 @@
-/* eslint-disable no-undef */
 /* eslint-disable no-unused-vars */
-// eslint-disable-next-line no-unused-vars
-import React, { useState } from 'react';
+
+import React, {useState, useEffect} from 'react';
 import TodoList from './TodoList';
 import AddTodoForm from './AddTodoForm';
 
-const App = () => {
-  //state management
-  const [todos, setTodos] = useState([]);
-  //todos: An array to hold the list of todo items. 
-  //setTodos function to update the todos array. 
-  const [todoList, setTodoList] = useState([]); //create todoList state variable
+const useSemiPState = (key, initialState) => {
+  const [state, setState] = React.useState(() => {
+    const savedValue = localStorage.getItem(key); 
+    return savedValue ? JSON.parse(savedValue) : initialState; 
+  })
 
-  //This function is used to add a new Todo and updates the "newTodo" state
-  const handleAddTodo = (todoTitle) => {
-    const newTodoObject = { id: todos.length + 1, title: todoTitle };
-    setTodos([...todos, newTodoObject]);
-    setNewTodo(todoTitle);
-  };
+  React.useEffect(() => {
+    localStorage.setItem(key,JSON.stringify(state)); 
+  }, [key, state]); 
+
+    return [state, setState]; 
+}
+
+
+const App = () => {
+  const [todoList, setTodoList] = useSemiPState('savedTodoList', []); 
+
 
   const addTodo = (newTodo) => {  //takes a new todo object and add it to the list
     setTodoList([...todoList, newTodo]); 
