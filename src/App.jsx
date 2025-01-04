@@ -7,12 +7,12 @@ import AddTodoForm from './AddTodoForm';
 const useSemiPState = (key, initialState) => {
   const [state, setState] = React.useState(() => {
     const savedValue = localStorage.getItem(key); 
-    return savedValue ? JSON.parse(savedValue) : initialState; 
+    return savedValue ? JSON.parse(savedValue) : []; 
   })
 
   React.useEffect(() => {
-    localStorage.setItem(key,JSON.stringify(state)); 
-  }, [key, state]); 
+    localStorage.setItem('savedTodoList', JSON.stringify(state)); 
+  }, [state]); 
 
     return [state, setState]; 
 }
@@ -26,11 +26,16 @@ const App = () => {
     setTodoList([...todoList, newTodo]); 
   }
 
+  const removeTodo = (id) => { 
+    const updateTodoList = todoList.filter((todo) => todo.id !== id); 
+    setTodoList(updateTodoList); 
+  }
+
   return (
     <div>
       <h1>Todo List</h1>
       <AddTodoForm onAddTodo={addTodo} /> {/*//renders the AddTodoForm and passes the handleAddTodo function to it as a prop.*/}
-      <TodoList todoList={todoList} /> {/*passes the todoList array to "TodoList" component */}
+      <TodoList todoList={todoList} onRemoveTodo={removeTodo}/> {/*passes the todoList array to "TodoList" component */}
     </div>
   );
 };

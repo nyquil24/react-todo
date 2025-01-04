@@ -3,11 +3,14 @@
 import TodoList from "./TodoList"
 
 
-const TodoListItem = ({todo}) =>{
+const TodoListItem = ({todo, onRemoveTodo}) =>{
 
     return(
         <li>
             {todo.title} {/*takes a single "todo" object as a prop */}
+            <button type="button" onClick={() => onRemoveTodo(todo.id)}> 
+            Remove
+            </button>
         </li>
     )
 
