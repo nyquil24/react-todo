@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-unused-vars */
 
 import React, {useState, useEffect} from 'react';
@@ -19,8 +20,33 @@ const useSemiPState = (key, initialState) => {
 
 
 const App = () => {
-  const [todoList, setTodoList] = useSemiPState('savedTodoList', []); 
 
+  const [todoList, setTodoList] = useSemiPState('savedTodoList', []); 
+  const [isLoading, setIsLoading] = useState(true); 
+
+  useEffect(() => { 
+    const fetchTodos = new Promise((resolve) => {
+      setTimeout(() => {
+        resolve({
+          data: { 
+            todoList: JSON.parse(localStorage.getItem('savedTodoList')) || [], 
+          }
+        })
+      }, 2000);
+      
+    })
+
+    fetchTodos.then((result) => { 
+      setTodoList(result.data.todoList); 
+      setIsLoading(false); 
+    }); 
+  }, []); 
+
+    useEffect(() => {
+      if (!isLoading) {
+        localStorage.setItem('savedTodoList', JSON.stringify(todoList))
+      }
+    }, [todoList, isLoading]); 
 
   const addTodo = (newTodo) => {  //takes a new todo object and add it to the list
     setTodoList([...todoList, newTodo]); 
@@ -31,13 +57,18 @@ const App = () => {
     setTodoList(updateTodoList); 
   }
 
-  return (
+  return( 
     <div>
-      <h1>Todo List</h1>
-      <AddTodoForm onAddTodo={addTodo} /> {/*//renders the AddTodoForm and passes the handleAddTodo function to it as a prop.*/}
-      <TodoList todoList={todoList} onRemoveTodo={removeTodo}/> {/*passes the todoList array to "TodoList" component */}
+      <h1> Todo List</h1>
+      {isLoading ? (// conditional rendering for loading indicator 
+        <p> Loading...</p>
+      ) : (
+        <>
+          <AddTodoForm onAddTodo={addTodo} /> 
+          <TodoList todoList={todoList} onRemoveTodo={removeTodo} /> 
+        </>
+      )}
     </div>
-  );
-};
-
+  )
+}
 export default App;
