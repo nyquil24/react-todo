@@ -4,13 +4,14 @@
 import React, { useState, useEffect } from 'react';
 import TodoList from './TodoList';
 import AddTodoForm from './AddTodoForm';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 const App = () => {
-  // State declarations
+
   const [todoList, setTodoList] = useState([]); // Default to an empty array
   const [isLoading, setIsLoading] = useState(true); // Track loading state
 
-  // Fetch data from Airtable
+
   const fetchData = async () => {
     const options = {
       method: 'GET',
@@ -42,34 +43,37 @@ const App = () => {
     }
   };
 
-  // Fetch todos on initial render
+
   useEffect(() => {
     fetchData();
   }, []);
 
-  // Persist data to localStorage when todoList changes (and not loading)
+
   useEffect(() => {
     if (!isLoading) {
       localStorage.setItem('savedTodoList', JSON.stringify(todoList));
     }
   }, [todoList, isLoading]);
 
-  // Add a new todo
+
   const addTodo = (newTodo) => {
     setTodoList([...todoList, newTodo]);
   };
 
-  // Remove a todo by id
+
   const removeTodo = (id) => {
     const updatedTodoList = todoList.filter((todo) => todo.id !== id);
     setTodoList(updatedTodoList);
   };
 
   return (
-    <div>
-      <h1>Todo List</h1>
-      {isLoading ? ( // Conditional rendering for loading indicator
-        <p>Loading...</p>
+    <BrowserRouter> 
+     <Routes> 
+      <Route path="/" element={ 
+       <div>
+        <h1>Todo List</h1>
+          {isLoading ? ( // Conditional rendering for loading indicator
+          <p>Loading...</p>
       ) : (
         <>
           <AddTodoForm onAddTodo={addTodo} />
@@ -77,6 +81,16 @@ const App = () => {
         </>
       )}
     </div>
+      }
+      />
+    <Route path="/new" element={ 
+      <div> 
+        <h1>New Todo List</h1>
+      </div>
+      }
+      />
+    </Routes> 
+   </BrowserRouter>
   );
 };
 
