@@ -1,0 +1,37 @@
+
+
+.ListItem {
+    color: #c33434; 
+    font-size: 18px;
+    font-weight: bold;
+    padding: 8px;
+    margin: 5px 0;
+    background-color: #54b171;
+    border-radius: 5px;
+  }
+  
+
+  body {
+    background-color: #408c6f;
+    color: #333;
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 20px;
+  }
+  
+
+  @media (max-width: 768px) {
+    .ListItem {
+      font-size: 16px;
+      padding: 6px;
+    }
+  }
+
+  button{
+    margin: 5px;
+    color: #49adf4; 
+  }
+
+  input{
+    margin: 4px;
+  }
