@@ -2,6 +2,7 @@
 /* eslint-disable no-unused-vars */
 import TodoList from "./TodoList"
 import style from "./TodoListItem.module.css"; 
+import PropTypes from "prop-types";
 
 const TodoListItem = ({todo, onRemoveTodo}) =>{
 
@@ -16,5 +17,12 @@ const TodoListItem = ({todo, onRemoveTodo}) =>{
 
 }
 
+TodoListItem.PropTypes = {
+    todo: PropTypes.shape({
+        id: PropTypes.number.isRequired,
+        title: PropTypes.string.isRequired,
+    }).isRequired,
+    onRemveTodo: PropTypes.func.isRequired,
+}; 
 
 export default TodoListItem

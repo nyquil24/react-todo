@@ -1,7 +1,8 @@
 // eslint-disable-next-line no-unused-vars
 import React, {useState, useEffect} from 'react';
 import InputWithLabel from './InputWithLabel'
-
+// eslint-disable-next-line no-unused-vars
+import PropTypes from 'prop-types'
 
 
 // eslint-disable-next-line react/prop-types
@@ -36,5 +37,9 @@ const AddTodoForm = ({ onAddTodo }) => {//onAddTodo prop, passed from App, to ad
         </form> 
   )
 };
+
+AddTodoForm.propTypes = {
+  onAddTodo: PropTypes.func.isRequired,
+}
 
 export default AddTodoForm;
