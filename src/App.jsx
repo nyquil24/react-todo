@@ -20,7 +20,7 @@ const App = () => {
       },
     };
 
-    const url = `https://api.airtable.com/v0/${import.meta.env.VITE_AIRTABLE_BASE_ID}/${import.meta.env.VITE_AIRTABLE_NAME}`;
+    const url = `https://api.airtable.com/v0/${import.meta.env.VITE_AIRTABLE_BASE_ID}/${import.meta.env.VITE_AIRTABLE_NAME}?view=Grid%20view&sort[0][field]=title&sort[0][direction]=asc`;
 
     try {
       const response = await fetch(url, options);
@@ -30,6 +30,12 @@ const App = () => {
       }
 
       const data = await response.json();
+
+      data.records.sort((objectA, objectB) => {
+        if (objectA.fields.title < objectB.fields.title) return -1;
+        if (objectA.fields.title > objectB.fields.title) return 1;
+        return 0;
+      });
 
       const todos = data.records.map((record) => ({
         id: record.id,
